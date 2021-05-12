@@ -1,4 +1,4 @@
-# ultrasonic-aliases
+# Ultrasonic Aliases
 Aliases that help you to work as fast as a jet plane on your Rails projects.
 
 This saves you 5 minutes here, 3 minutes there, and when you sum up the time savings across a 1-year-long project with multiple people in a team, it saves up to 20% of project's budget.
