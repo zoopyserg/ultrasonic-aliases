@@ -13,10 +13,11 @@ git init
 git remote add origin https://github.com/zoopyserg/automatic-rails-setup.git
 git fetch origin
 git checkout -b main --track origin/main
-echo "source '~/.aliases.sh'" > ~/.bashrc
+echo 'source "~/.aliases.sh"' >> ~/.bashrc
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ````
 
-(this will download aliases and vimrc to your $HOME directory)
+(this will download aliases and vimrc to your $HOME directory and install Vundle)
 
 Open Vim in a new tab and run:
 ````
