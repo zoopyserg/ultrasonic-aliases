@@ -6,6 +6,10 @@ This saves you 5 minutes here, 3 minutes there, and when you sum up the time sav
 Want to thank me?
 Please support me on Patreon, I'll be happy: https://www.patreon.com/vinogradoff_group_tip_jar/
 
+# Requirements
+- Git
+- Vim
+
 # Setup
 ````
 curl -fsSL https://github.com/zoopyserg/ultrasonic-aliases/raw/main/.setup.sh | bash
