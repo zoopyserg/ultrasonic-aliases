@@ -10,7 +10,7 @@ Please support me on Patreon, I'll be happy: https://www.patreon.com/vinogradoff
 ````
 cd
 git init
-git remote add origin https://github.com/zoopyserg/automatic-rails-ubuntu-setup.git
+git remote add origin https://github.com/zoopyserg/automatic-rails-setup.git
 git fetch origin
 git checkout -b main --track origin/main
 echo "source '~/.aliases.sh'" > ~/.bashrc
