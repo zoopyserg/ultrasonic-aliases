@@ -1,4 +1,4 @@
-# Ultrasonic Aliases Rails.
+# Ultrasonic Aliases for Rails.
 Aliases that help you to work as fast as a jet plane on your Rails projects.
 
 This saves you 5 minutes here, 3 minutes there, and when you sum up the time savings across a 1-year-long project, it saves up to 20% of project's budget.
@@ -8,7 +8,7 @@ Please support me on Patreon, I'll be happy: https://www.patreon.com/vinogradoff
 
 # Setup
 ````
-curl -fsSL https://github.com/zoopyserg/ultrasonic-aliases-rails/raw/main/.setup.sh | bash
+curl -fsSL https://github.com/zoopyserg/ultrasonic-aliases/raw/main/.setup.sh | bash
 ````
 (this will download aliases and vimrc to your $HOME directory and install Vundle)
 
