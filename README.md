@@ -73,4 +73,5 @@ The list is constantly growing.
 
 # For even more optimization check out:
 https://github.com/zoopyserg/automatic-rails-setup
+
 https://github.com/zoopyserg/caperoma
