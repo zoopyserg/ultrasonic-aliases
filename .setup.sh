@@ -5,3 +5,4 @@ git fetch origin
 git checkout -b main --track origin/main
 echo 'source "~/.aliases.sh"' >> ~/.bashrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git config --global core.editor vim
