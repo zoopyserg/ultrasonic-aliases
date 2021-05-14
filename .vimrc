@@ -26,6 +26,7 @@ Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-rbenv'
 Plugin 'tpope/vim-rake'
 Plugin 'preservim/nerdtree'
+Plugin 'tommcdo/vim-exchange'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
