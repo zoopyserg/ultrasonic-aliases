@@ -31,5 +31,5 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 set nowrap
-set relativenumber
 set nu
+set relativenumber
