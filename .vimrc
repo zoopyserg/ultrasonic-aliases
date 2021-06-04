@@ -33,3 +33,15 @@ filetype plugin indent on    " required
 set nowrap
 set nu
 set relativenumber
+
+" **** RSpec Launchers ****
+nnoremap <F2> :w!<CR>:!rspec %<CR>
+nnoremap <F3> :w!<CR>:!rspec %:<C-r>=line('.')<CR><CR>
+nnoremap <F4> :wa<CR>:!rspec .<CR>
+
+" **** RSpec helpers ****
+nnoremap <C-f>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :focus<Esc><C-o><C-o>
+nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C-o>
+nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :js<Esc><C-o><C-o>
+nnoremap <C-c>  ?, \(:focus\\|:pending\)<CR>:s/, \(:focus\\|:pending\)//g<CR><C-o><C-o>
+
