@@ -45,3 +45,11 @@ nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C
 nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :js<Esc><C-o><C-o>
 nnoremap <C-c>  ?, \(:focus\\|:pending\)<CR>:s/, \(:focus\\|:pending\)//g<CR><C-o><C-o>
 
+" Remove Trailing Spaces
+autocmd! BufWritePre * :%s/\s\+$//e
+
+" 2-space Indentation
+set softtabstop=0
+set expandtab
+set smarttab
+set shiftwidth=2
