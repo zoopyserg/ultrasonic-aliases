@@ -28,6 +28,7 @@ Plugin 'tpope/vim-rake'
 Plugin 'preservim/nerdtree'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'thoughtbot/vim-rspec'
+Plugin 'christoomey/vim-rfactory'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
