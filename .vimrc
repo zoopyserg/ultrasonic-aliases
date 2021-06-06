@@ -27,23 +27,13 @@ Plugin 'tpope/vim-rbenv'
 Plugin 'tpope/vim-rake'
 Plugin 'preservim/nerdtree'
 Plugin 'tommcdo/vim-exchange'
+Plugin 'thoughtbot/vim-rspec'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 set nowrap
-set nu
 set relativenumber
-
-" **** RSpec Launchers ****
-nnoremap <F2> :w!<CR>:!rspec %<CR>
-nnoremap <F3> :w!<CR>:!rspec %:<C-r>=line('.')<CR><CR>
-nnoremap <F4> :wa<CR>:!rspec .<CR>
-
-" **** RSpec helpers ****
-nnoremap <C-f>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :focus<Esc><C-o><C-o>
-nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C-o>
-nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :js<Esc><C-o><C-o>
-nnoremap <C-c>  ?, \(:focus\\|:pending\)<CR>:s/, \(:focus\\|:pending\)//g<CR><C-o><C-o>
+set nu
 
 " Remove Trailing Spaces
 autocmd! BufWritePre * :%s/\s\+$//e
@@ -53,3 +43,16 @@ set softtabstop=0
 set expandtab
 set smarttab
 set shiftwidth=2
+
+" **** RSpec Launchers ****
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+" **** RSpec helpers ****
+" maybe put 'it' and 'specify' here too.
+nnoremap <C-f>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :focus<Esc><C-o><C-o>
+nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C-o>
+nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :js<Esc><C-o><C-o>
+nnoremap <C-c>  ?, \(:focus\\|:pending\)<CR>:s/, \(:focus\\|:pending\)//g<CR><C-o><C-o>
