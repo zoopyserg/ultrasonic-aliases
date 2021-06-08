@@ -25,16 +25,86 @@ Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-rbenv'
 Plugin 'tpope/vim-rake'
-Plugin 'preservim/nerdtree'
+" Plugin 'preservim/nerdtree' - switched to LExplorer
 Plugin 'tommcdo/vim-exchange'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'christoomey/vim-rfactory'
+Plugin 'honza/vim-snippets'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" Open in split window while keeping Netrw untouched
+function! OpenToRight()
+  :normal v
+  let g:path=expand('%:p')
+  :q!
+  execute 'belowright vnew' g:path
+  :normal k<C-l>
+endfunction
+
+" Open in split horiz split window while keeping Netrw untouched
+function! OpenBelow()
+  :normal v
+  let g:path=expand('%:p')
+  :q!
+  execute 'belowright new' g:path
+  :normal k<C-l>
+endfunction
+
+" Shortcuts for splits etc
+function! NetrwMappings()
+  noremap <buffer> <C-l> <C-w>l
+  noremap <silent> <C-e> :call ToggleNetrw()<CR>
+  noremap <buffer> V :call OpenToRight()<CR>
+  noremap <buffer> H :call OpenBelow()<CR>
+endfunction
+
+" Make shortcuts work
+augroup netrw_mappings
+  autocmd!
+  autocmd filetype netrw call NetrwMappings()
+augroup END
+
+" Open Tree when I open VIM
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :call ToggleNetrw()
+augroup END
+
+" Define a variable
+let g:NetrwIsOpen=0
+" Open tree if closed, close if opened
+function! ToggleNetrw()
+  if g:NetrwIsOpen
+    let i = bufnr("$")
+    while (i >= 1)
+      if (getbufvar(i, "&filetype") == "netrw")
+        silent exe "bwipeout " . i
+      endif
+      let i-= 1
+    endwhile
+    let g:NetrwIsOpen=0
+  else
+    let g:NetrwIsOpen=1
+    silent Lexplore
+  endif
+endfunction
+
+" Netrw (built-in file browser)
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 20
+
+
+" Basic Settings
 set nowrap
 set relativenumber
 set nu
+
+" Spelling
+set spelllang=en_us,ru_ru,uk
+set spell
 
 " Remove Trailing Spaces
 autocmd! BufWritePre * :%s/\s\+$//e
@@ -57,3 +127,5 @@ nnoremap <C-f>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :focus<Esc><C-o><C-o
 nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C-o>
 nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :js<Esc><C-o><C-o>
 nnoremap <C-c>  ?, \(:focus\\|:pending\)<CR>:s/, \(:focus\\|:pending\)//g<CR><C-o><C-o>
+nnoremap <Leader>j  ?, \(:js\)<CR>:s/, \(:js\)//g<CR><C-o><C-o>
+
