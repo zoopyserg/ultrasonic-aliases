@@ -123,9 +123,11 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
 " **** RSpec helpers ****
-" maybe put 'it' and 'specify' here too.
-nnoremap <C-f>  ?it^MllA^[hhi, :focus^[^O
+nnoremap <C-f>  ?it 
+llAhhi, :focus
 nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C-o>
 nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, js: true<Esc><C-o><C-o>
-nnoremap <C-c> ?:focu^Mhhhlxxxxxxxx
+nnoremap <C-c> ?:focu
+hhhlxxxxxxxx
 nnoremap <Leader>j  ?, \(js: true\)<CR>:s/, \(js: true\)//g<CR><C-o><C-o>
+
