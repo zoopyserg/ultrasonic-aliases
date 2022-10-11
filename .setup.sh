@@ -1,6 +1,7 @@
 cd
 git init
 git remote add origin https://github.com/zoopyserg/ultrasonic-aliases.git
+git remote add main git@github.com:zoopyserg/ultrasonic-aliases.git
 git fetch origin
 git checkout -b main --track origin/main
 echo 'source ~/.aliases.sh' >> ~/.bashrc
