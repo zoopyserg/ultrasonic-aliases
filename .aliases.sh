@@ -25,7 +25,8 @@ alias dbs='rails db:seed'
 alias pdbd='rails parallel:drop'
 alias pdbc='rails parallel:create'
 alias pdbm='rails parallel:load_schema'
-alias rj='rake jobs:clear jobs:work'
+alias rjcw='rake jobs:clear jobs:work'
+alias rj='rake jobs:work'
 
 alias pdb='pdbd && pdbc && pdbm'
 alias pr='rake parallel:spec'
@@ -59,4 +60,10 @@ alias ac='a && c'
 
 findme() {
   git grep $1 c15-multibrand
+}
+
+avi_to_mp4() {
+  # $1 is the avi file
+  # $2 is the mp4 file
+  ffmpeg -i $1 -c:v libx265 -crf 26 -preset fast -c:a aac -b:a 128k -x265-params lossless=1 -r 60 $2
 }
