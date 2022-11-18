@@ -1,7 +1,7 @@
 alias u='sudo apt -qq update -y && sudo apt -qq upgrade -y && sudo apt -qq autoremove -y'
 alias s='git status'
 alias b='git branch'
-alias l='git log --graph --oneline --branches'
+alias l='git log --graph --oneline'
 alias a='git add -A'
 alias c='git commit'
 alias co='git checkout'
