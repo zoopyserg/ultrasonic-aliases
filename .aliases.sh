@@ -57,6 +57,7 @@ alias m='meld'
 alias hc='heroku run rails c'
 alias aca='a && ca'
 alias ac='a && c'
+alias uninstallallgems="gem uninstall -aIx"
 
 findme() {
   git grep $1 c15-multibrand
