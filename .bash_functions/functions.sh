@@ -186,6 +186,7 @@ deployable_branch() {
   awk < config/deploy/staging.rb '$2 ~ /branch/ { print $3 }' | sed /'.*'/p | sed "s/'//g" | sed -n 1p
 }
 
+# rebase local branch to remote branch
 git_rebase() {
   git rebase $(git rev-parse --abbrev-ref --symbolic-full-name @{u})
 }
@@ -204,6 +205,8 @@ git_checkout() {
   done
 }
 
+# -z = string empty
+# -n = string not empty
 sync_branches() {
   git fetch
   git for-each-ref --format="%(refname:short) %(upstream:short)" refs/heads | \
@@ -219,6 +222,18 @@ sync_branches() {
   done
 }
 
+# iterate over all git branches
+# if branch name is not exactly the same as the name of the current branch then delete that branch
+delete_all_but_current_branch() {
+  git for-each-ref --format="%(refname:short)" refs/heads | \
+  while read branch
+  do
+    if [[ "$branch" != "`git rev-parse --abbrev-ref HEAD`" ]]; then
+      git branch -D $branch
+    fi
+  done
+}
+
 generate_report() {
   git fetch
   git branch -r | \
@@ -228,4 +243,19 @@ generate_report() {
       git log --pretty=format:'%s' --since='8 day ago' | grep "^\["
     fi
   done
+}
+
+# usage: restore_db_dump <pg_user> <pg_database_name> <dump_file_full_path>
+restore_db_dump() {
+  # $1 - postgres user
+  # $2 - database name
+  # $3 - full path to dump file name
+  dbd && dbc
+  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U $1 -d $2 $3
+  dbm
+  dbrstt
+  echo 'Changing admins passwords'
+  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  echo 'Admins passwords changed'
+  echo 'Restored' $3 'to development database!'
 }
