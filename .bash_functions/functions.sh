@@ -247,15 +247,17 @@ generate_report() {
 
 # usage: restore_db_dump <pg_user> <pg_database_name> <dump_file_full_path>
 restore_db_dump() {
-  # $1 - postgres user
-  # $2 - database name
-  # $3 - full path to dump file name
+  # take postgres user from whoami
+  USER=`whoami`
+  # take postgres database from config/database.yml by parsing it to find development database and take the first line if there are many
+  DATABASE=`grep -A 1 "development" config/database.yml | grep database | awk '{print $2}' | head -n 1`
+  # $1 - latest dump file
   dbd && dbc
-  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U $1 -d $2 $3
+  pg_restore --verbose --clean --no-acl --no-owner -h localhost -U $USER -d $DATABASE $1
   dbm
   dbrstt
   echo 'Changing admins passwords'
   rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
   echo 'Admins passwords changed'
-  echo 'Restored' $3 'to development database!'
+  echo 'Restored' $1 'to development database!'
 }
