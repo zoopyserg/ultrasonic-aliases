@@ -138,6 +138,14 @@ remove_focus() {
   grep -Rl ', :focus' spec/ | while read p; do sed -i "s/, :focus//g" $p; done
 }
 
+remove_byebugs() {
+  grep -Rl 'byebug' app/ | while read p; do sed -i "/byebug/d" $p; done
+}
+
+remove_byebugs() {
+  grep -Rl 'binding.break' app/ | while read p; do sed -i "/binding.break/d" $p; done
+}
+
 replace_be_success_tests() {
   grep -Rl be_success spec/ | while read p; do sed -i "s/be_success/render_template :create/g" $p; done
 }
@@ -260,4 +268,10 @@ restore_db_dump() {
   rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
   echo 'Admins passwords changed'
   echo 'Restored' $1 'to development database!'
+}
+
+gs() {
+  git stash
+  git fetch
+  git switch -c $1 remotes/origin/$1
 }
