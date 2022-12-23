@@ -15,6 +15,10 @@ alias rse='bin/rails db:environment:set RAILS_ENV=development'
 alias dbrst='bin/rails db:reset'
 alias dbrstt='bin/rails db:reset RAILS_ENV=test'
 
+alias cleartmp='rm -rf tmp/*'
+
+alias src='source ~/.bashrc'
+
 alias rs='rails server --binding=0.0.0.0'
 alias rc='rails console'
 alias dbc='rails db:create'
@@ -36,8 +40,8 @@ alias gib='gem install bundler'
 
 alias ddb='dbd && dbc && dbm && dbt && dbs'
 alias db='rse && dbrst && dbrstt'
-alias dbr='uninstallallgems && gib && bu && db && r'
-alias dbrs='uninstallallgems && gib && bu && db && rs'
+alias dbr='cleartmp && bu && db && r'
+alias dbrs='cleartmp && bu && db && rs'
 alias ddbrs='bu && ddb && rs'
 alias d='git diff'
 alias dh='git diff HEAD'
@@ -62,6 +66,7 @@ alias aca='a && ca'
 alias ac='a && c'
 alias gib='gem install bundler'
 alias uninstallallgems="gem uninstall -aIx"
+alias reinstallgems="uninstallallgems && gib && bu"
 
 findme() {
   git grep $1 c15-multibrand
