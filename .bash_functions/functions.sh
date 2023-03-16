@@ -253,21 +253,23 @@ generate_report() {
   done
 }
 
-# usage: restore_db_dump <pg_user> <pg_database_name> <dump_file_full_path>
+# usage: restore_db_dump <dump_file_full_path>
 restore_db_dump() {
   # take postgres user from whoami
   USER=`whoami`
   # take postgres database from config/database.yml by parsing it to find development database and take the first line if there are many
   DATABASE=`grep -A 1 "development" config/database.yml | grep database | awk '{print $2}' | head -n 1`
+  echo "Restoring database $DATABASE from $1"
   # $1 - latest dump file
   dbd && dbc
   pg_restore --verbose --clean --no-acl --no-owner -h localhost -U $USER -d $DATABASE $1
-  dbm
-  dbrstt
-  echo 'Changing admins passwords'
-  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
-  echo 'Admins passwords changed'
-  echo 'Restored' $1 'to development database!'
+  # dbm
+  # dbrstt
+  # echo 'Changing admins passwords'
+  # rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  # rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  # echo 'Admins passwords changed'
+  # echo 'Restored' $1 'to development database!'
 }
 
 gs() {

@@ -15,7 +15,7 @@ alias rse='bin/rails db:environment:set RAILS_ENV=development'
 alias dbrst='bin/rails db:reset'
 alias dbrstt='bin/rails db:reset RAILS_ENV=test'
 
-alias cleartmp='rm -rf tmp/*'
+alias cleartmp='rm -rf ./tmp/*'
 
 alias src='source ~/.bashrc'
 
@@ -38,7 +38,7 @@ alias pdbr='bu && pdb && pr'
 
 alias gib='gem install bundler'
 
-alias ddb='dbd && dbc && dbm && dbt && dbs'
+alias ddb='rse && dbd && dbc && dbm && dbt && dbs'
 alias db='rse && dbrst && dbrstt'
 alias dbr='cleartmp && bu && db && r'
 alias dbrs='cleartmp && bu && db && rs'
@@ -64,9 +64,29 @@ alias m='meld'
 alias hc='heroku run rails c'
 alias aca='a && ca'
 alias ac='a && c'
-alias gib='gem install bundler'
+alias gib='gem install bundler -v 2.3.26'
 alias uninstallallgems="gem uninstall -aIx"
 alias reinstallgems="uninstallallgems && gib && bu"
+
+if [ -f "/usr/share/bash-completion/completions/git" ]; then
+  source /usr/share/bash-completion/completions/git
+  __git_complete gc _git_checkout
+  __git_complete gp _git_push
+  __git_complete gpf _git_push
+  __git_complete p _git_pull
+else
+  echo "Error loading git completions"
+fi
+
+
+makeprojectvirgin() {
+  # git clean -x -d -f -n except .env
+  git clean -x -d -f -n | grep -v .env | xargs rm -rf
+  git reset --hard
+  git checkout .
+  git pull
+  git status
+}
 
 findme() {
   git grep $1 c15-multibrand
