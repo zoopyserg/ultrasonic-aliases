@@ -268,6 +268,8 @@ restore_db_dump() {
   # echo 'Changing admins passwords'
   # rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
   # rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  # heroku run rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
+  # heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
   # echo 'Admins passwords changed'
   # echo 'Restored' $1 'to development database!'
 }
@@ -277,3 +279,4 @@ gs() {
   git fetch
   git switch -c $1 remotes/origin/$1
 }
+

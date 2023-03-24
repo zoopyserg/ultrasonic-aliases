@@ -41,14 +41,14 @@ alias gib='gem install bundler'
 alias ddb='rse && dbd && dbc && dbm && dbt && dbs'
 alias db='rse && dbrst && dbrstt'
 alias dbr='cleartmp && bu && db && r'
-alias dbrs='cleartmp && bu && db && rs'
+alias dbrs='bu && db && rs'
 alias ddbrs='bu && ddb && rs'
 alias d='git diff'
 alias dh='git diff HEAD'
 alias e='exit'
 alias off='sudo poweroff'
-alias gph='git push heroku $(git rev-parse --abbrev-ref HEAD):main'
-alias gpfh='git push --force heroku $(git rev-parse --abbrev-ref HEAD):main'
+alias gph='git push uc-dev-1 $(git rev-parse --abbrev-ref HEAD):main'
+alias gpfh='git push --force uc-dev-1 $(git rev-parse --abbrev-ref HEAD):main'
 alias gpf='git push --force'
 alias gp='git push'
 alias ho='heroku open'
@@ -67,11 +67,13 @@ alias ac='a && c'
 alias gib='gem install bundler -v 2.3.26'
 alias uninstallallgems="gem uninstall -aIx"
 alias reinstallgems="uninstallallgems && gib && bu"
+alias hl="heroku logs --tail --remote uc-dev-1"
 
 if [ -f "/usr/share/bash-completion/completions/git" ]; then
   source /usr/share/bash-completion/completions/git
-  __git_complete gc _git_checkout
+  __git_complete co _git_checkout
   __git_complete gp _git_push
+  __git_complete ga _git_add
   __git_complete gpf _git_push
   __git_complete p _git_pull
 else
@@ -96,4 +98,9 @@ avi_to_mp4() {
   # $1 is the avi file
   # $2 is the mp4 file
   ffmpeg -i $1 -c:v libx265 -crf 26 -preset fast -c:a aac -b:a 128k -x265-params lossless=1 -r 60 $2
+}
+
+# a function called ru() that will run rubocop -A against all files that were edited in this Git folder, excluding all file types that are not .rb and not .erb
+ru() {
+  git diff --name-only HEAD | grep -E '\.(rb|erb)$' | xargs rubocop -A
 }
