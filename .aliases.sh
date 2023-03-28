@@ -44,6 +44,7 @@ alias dbr='cleartmp && bu && db && r'
 alias dbrs='bu && db && rs'
 alias ddbrs='bu && ddb && rs'
 alias d='git diff'
+alias dn='git diff HEAD^ --name-only'
 alias dh='git diff HEAD'
 alias e='exit'
 alias off='sudo poweroff'
@@ -102,5 +103,16 @@ avi_to_mp4() {
 
 # a function called ru() that will run rubocop -A against all files that were edited in this Git folder, excluding all file types that are not .rb and not .erb
 ru() {
-  git diff --name-only HEAD | grep -E '\.(rb|erb)$' | xargs rubocop -A
+  git diff --name-only HEAD^ | grep -E '\.(rb|erb)$' | xargs rubocop -A
+}
+
+herokuresetdb() {
+  heroku pg:reset --remote uc-dev-1
+  heroku run rake db:schema:load --remote uc-dev-1
+  heroku run "RAILS_ENV=test rake db:seed" --remote uc-dev-1
+}
+
+herokuresetpasswords() {
+  heroku run rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
+  heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
 }
