@@ -14,6 +14,8 @@ alias bu='bundle'
 alias rse='bin/rails db:environment:set RAILS_ENV=development'
 alias dbrst='bin/rails db:reset'
 alias dbrstt='bin/rails db:reset RAILS_ENV=test'
+alias st='git stash'
+alias sta='git stash apply'
 
 alias cleartmp='rm -rf ./tmp/*'
 
