@@ -52,6 +52,7 @@ alias e='exit'
 alias off='sudo poweroff'
 alias gph='git push uc-dev-1 $(git rev-parse --abbrev-ref HEAD):main'
 alias gpfh='git push --force uc-dev-1 $(git rev-parse --abbrev-ref HEAD):main'
+alias gpfh5='git push --force uc-dev-5 $(git rev-parse --abbrev-ref HEAD):main'
 alias gpf='git push --force'
 alias gp='git push'
 alias ho='heroku open'
@@ -114,7 +115,21 @@ herokuresetdb() {
   heroku run "RAILS_ENV=test rake db:seed" --remote uc-dev-1
 }
 
+resetpasswords() {
+  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
+  rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
+}
+
 herokuresetpasswords() {
   heroku run rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
   heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
 }
+
+replace_unsanitized() {
+  grep -Rl unsanitized app/ | xargs sed -i "s/\.unsanitized/.instance_variable_get(:@filename)/g"
+}
+
+undo_replace_unsanitized() {
+  grep -Rl ".instance_variable_get(:@filename)" app/ | xargs sed -i "s/\.instance_variable_get(:@filename)/.unsanitized/g"
+}
+
