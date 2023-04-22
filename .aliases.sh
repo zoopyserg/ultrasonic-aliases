@@ -40,7 +40,8 @@ alias pdbr='bu && pdb && pr'
 
 alias gib='gem install bundler'
 
-alias ddb='rse && dbd && dbc && dbm && dbt && dbs'
+alias dddb='rse && dbd && dbc && dbm && dbt && dbs'
+alias ddb='rse && dbd && dbc && dbm && dbrst && dbrstt'
 alias db='rse && dbrst && dbrstt'
 alias dbr='cleartmp && bu && db && r'
 alias dbrs='bu && db && rs'
@@ -116,13 +117,21 @@ herokuresetdb() {
 }
 
 resetpasswords() {
-  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
-  rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
+  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
 }
 
 herokuresetpasswords() {
-  heroku run rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
-  heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-1
+  # server number variable - if $1 is present then $1, else 1
+  server_number=${1:-1}
+
+  heroku run rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-$server_number
+  heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-$server_number
+}
+
+foo() {
+  server_number=${1:-1}
+  echo $server_number
 }
 
 replace_unsanitized() {
@@ -133,3 +142,10 @@ undo_replace_unsanitized() {
   grep -Rl ".instance_variable_get(:@filename)" app/ | xargs sed -i "s/\.instance_variable_get(:@filename)/.unsanitized/g"
 }
 
+fix_schema() {
+  git checkout main -- db/structure.sql
+  dbd
+  dbc
+  db
+  dbm
+}
