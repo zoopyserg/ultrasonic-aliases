@@ -87,7 +87,7 @@ db() {
 
   echo '>> Test seed'
   echo ''
-  rails_env=test rails db:seed
+  rails_env=test rails db:reset
 }
 
 alias dbr='cleartmp && bu && db && r'
