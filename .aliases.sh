@@ -42,7 +42,54 @@ alias gib='gem install bundler'
 
 alias dddb='rse && dbd && dbc && dbm && dbt && dbs'
 alias ddb='rse && dbd && dbc && dbm && dbrst && dbrstt'
-alias db='rse && dbrst && dbrstt'
+# alias db='rse && dbrst && dbrstt'
+
+db() {
+  echo '>> Setting environment'
+  echo ''
+  rse
+
+  echo '>> Drop'
+  echo ''
+  dbd
+
+  echo '>> Create'
+  echo ''
+  dbc
+
+  echo '>> Get db/structure from main'
+  echo ''
+  git checkout main -- db/structure.sql
+
+  echo '>> Schema load'
+  echo ''
+  rails db:schema:load
+
+  echo '>> Reset db/structure'
+  echo ''
+  git reset db/structure.sql
+
+  echo '>> Checkout db/structure'
+  echo ''
+  git checkout db/structure.sql
+
+  echo '>> Migrate'
+  echo ''
+  dbm
+
+  echo '>> Prepare test base'
+  echo ''
+  rails db:test:prepare
+
+  echo '>> Seed'
+  echo ''
+  rails db:seed
+
+  echo '>> Test seed'
+  echo ''
+  rails_env=test rails db:seed
+}
+
 alias dbr='cleartmp && bu && db && r'
 alias dbrs='bu && db && rs'
 alias ddbrs='bu && ddb && rs'
