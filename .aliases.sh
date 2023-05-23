@@ -90,6 +90,32 @@ db() {
   RAILS_ENV=test rails db:reset
 }
 
+dbbi() {
+  echo '>> Setting environment'
+  echo ''
+  rse
+
+  echo '>> Drop'
+  echo ''
+  dbd
+
+  echo '>> Create'
+  echo ''
+  dbc
+
+  echo '>> Migrate'
+  echo ''
+  dbm
+
+  echo '>> Prepare test base'
+  echo ''
+  rails db:test:prepare
+
+  echo '>> Get data from Binance'
+  echo ''
+  rake binance:setup
+}
+
 alias dbr='cleartmp && bu && db && r'
 alias dbrs='bu && db && rs'
 alias ddbrs='bu && ddb && rs'
@@ -196,3 +222,12 @@ fix_schema() {
   db
   dbm
 }
+
+# use gh cli to send a PR into main with the following format:
+# title:
+# feat: #code: lower case title
+# body:
+# Fixes #code
+
+
+

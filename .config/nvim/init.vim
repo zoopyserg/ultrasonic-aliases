@@ -25,6 +25,7 @@ Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-rbenv'
 Plugin 'tpope/vim-rake'
+Plugin 'pangloss/vim-javascript'
 Plugin 'preservim/nerdtree'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'thoughtbot/vim-rspec'
@@ -129,3 +130,7 @@ nnoremap <C-p>  ?\(describe\\|context\) <CR>/do<CR><Left>i, :pending<Esc><C-o><C
 nnoremap <C-j>  ?\(describe\\|context\) <CR>/do<CR><Left>i, js: true<Esc><C-o><C-o>
 nnoremap <C-c> ?:focu hhhlxxxxxxxx
 nnoremap <Leader>j  ?, \(js: true\)<CR>:s/, \(js: true\)//g<CR><C-o><C-o>
+
+" use 2 spaces for tabbing in JS files and JS scripts of ERB partials
+
+
