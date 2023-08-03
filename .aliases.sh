@@ -183,6 +183,10 @@ ru() {
   git diff --name-only HEAD^ | grep -E '\.(rb|erb)$' | xargs rubocop -A
 }
 
+rum() {
+  git diff --name-only main | grep -E '\.(rb|erb)$' | xargs rubocop -A
+}
+
 herokuresetdb() {
   heroku pg:reset --remote uc-dev-1
   heroku run rake db:schema:load --remote uc-dev-1
@@ -228,6 +232,15 @@ fix_schema() {
 # feat: #code: lower case title
 # body:
 # Fixes #code
+
+
+# git push but set upstream
+# for example git push does git push --set-upstream origin 683-jotform-error
+# where last option is the current local branch name
+
+gps() {
+  git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
+}
 
 
 

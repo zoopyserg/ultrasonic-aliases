@@ -5,4 +5,5 @@
 !.aliases.sh
 !.gitignore
 !.setup.sh
+!.install_gems_in_separate_branches.sh
 .byebug_history
