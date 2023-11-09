@@ -33,7 +33,7 @@ Plugin 'christoomey/vim-rfactory'
 Plugin 'honza/vim-snippets'
 Plugin 'github/copilot.vim'
 call vundle#end()            " required
-filetype plugin indent on    " required
+"filetype plugin indent on    " required
 
 " " Open in split window while keeping Netrw untouched
 " function! OpenToRight()

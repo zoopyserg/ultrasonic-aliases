@@ -206,6 +206,11 @@ herokuresetpasswords() {
   heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-$server_number
 }
 
+resetpasswords() {
+  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+}
+
 foo() {
   server_number=${1:-1}
   echo $server_number
@@ -243,4 +248,8 @@ gps() {
 }
 
 
-
+g() {
+  echo "Enter the text to search:"
+  read search_text
+  grep -R "$search_text" app/
+}
