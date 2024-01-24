@@ -114,10 +114,12 @@ set tabpagemax=500
 autocmd! BufWritePre * :%s/\s\+$//e
 
 " 2-space Indentation
-set softtabstop=0
 set expandtab
 set smarttab
 set shiftwidth=2
+set softtabstop=2    " Number of spaces in a tab when editing
+
+autocmd FileType * setlocal expandtab shiftwidth=2 softtabstop=2
 
 " **** RSpec Launchers ****
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -133,5 +135,3 @@ nnoremap <C-c> ?:focu hhhlxxxxxxxx
 nnoremap <Leader>j  ?, \(js: true\)<CR>:s/, \(js: true\)//g<CR><C-o><C-o>
 
 " use 2 spaces for tabbing in JS files and JS scripts of ERB partials
-
-
