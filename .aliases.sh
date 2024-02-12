@@ -253,3 +253,8 @@ g() {
   read search_text
   grep -R "$search_text" app/
 }
+
+resetjobs() {
+  rails runner 'AdminUser.update_all(processing_finished: true)'
+  rake jobs:clear
+}
