@@ -258,3 +258,35 @@ resetjobs() {
   rails runner 'AdminUser.update_all(processing_finished: true)'
   rake jobs:clear
 }
+
+update_to_main() {
+  # Remember the current branch
+  current_branch=$(git branch --show-current)
+
+  # Stash changes
+  git stash
+
+  # Checkout master (or main)
+  git checkout master || git checkout main
+
+  # Pull the latest changes
+  git pull
+
+  # Checkout the remembered branch
+  git checkout $current_branch
+
+  # Rebase on top of master (or main)
+  git rebase master || git rebase main
+
+  # Apply stashed changes
+  git stash apply
+
+  # Run bundle to install gems
+  bundle
+
+  # Reset the database
+  db
+
+  echo "Process completed. You are now on branch $current_branch, rebased on top of the latest master (or main)."
+}
+
