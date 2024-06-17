@@ -190,12 +190,13 @@ rum() {
 herokuresetdb() {
   heroku pg:reset --remote uc-dev-1
   heroku run rake db:schema:load --remote uc-dev-1
-  heroku run "RAILS_ENV=test rake db:seed" --remote uc-dev-1
+  heroku run rails runner "LogEvent.create_partition_if_needed" --remote uc-dev-1
+  heroku run rails runner db/seeds/test.rb --remote uc-dev-1
 }
 
 resetpasswords() {
   rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
-  rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  # rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
 }
 
 herokuresetpasswords() {
@@ -203,12 +204,7 @@ herokuresetpasswords() {
   server_number=${1:-1}
 
   heroku run rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-$server_number
-  heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-$server_number
-}
-
-resetpasswords() {
-  rails runner 'AdminUser.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
-  rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }'
+  # heroku run rails runner 'User.find_each{|u| u.update_attribute(:password, "123123a"); u.update_columns(encrypted_otp_secret: nil, otp_required_for_login: false); }' --remote uc-dev-$server_number
 }
 
 foo() {
