@@ -255,15 +255,15 @@ resetjobs() {
   rake jobs:clear
 }
 
-update_to_main() {
+rebase_to_main() {
   # Remember the current branch
   current_branch=$(git branch --show-current)
 
   # Stash changes
-  git stash
+  git commit -m 'WIP' --allow-empty
 
   # Checkout master (or main)
-  git checkout master || git checkout main
+  git checkout main
 
   # Pull the latest changes
   git pull
@@ -272,10 +272,10 @@ update_to_main() {
   git checkout $current_branch
 
   # Rebase on top of master (or main)
-  git rebase master || git rebase main
+  git git rebase main
 
   # Apply stashed changes
-  git stash apply
+  git reset HEAD~1
 
   # Run bundle to install gems
   bundle
@@ -285,4 +285,6 @@ update_to_main() {
 
   echo "Process completed. You are now on branch $current_branch, rebased on top of the latest master (or main)."
 }
+
+cd ~/update_capital
 
