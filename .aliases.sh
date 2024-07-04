@@ -288,3 +288,24 @@ rebase_to_main() {
 
 cd ~/update_capital
 
+# brew install htop
+pg_restore_from_dump() {
+  rse
+  bundle exec rake db:drop
+  bundle exec rake db:create
+  pg_restore --verbose --clean --no-acl --no-owner -d updatecapital_development $1
+  dbm
+  resetpasswords
+}
+
+heroku_add_remote() {
+  heroku git:remote -a $1
+  git remote rename heroku $1
+}
+
+heroku_backup() {
+  heroku pg:backups:capture --remote $1
+  heroku pg:backups:download --remote $1
+  mv latest.dump ~/Desktop/$1.dump
+}
+
