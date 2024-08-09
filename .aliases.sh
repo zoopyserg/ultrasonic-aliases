@@ -309,3 +309,16 @@ heroku_backup() {
   mv latest.dump ~/Desktop/$1.dump
 }
 
+delete_all_but_main_branch() {
+  # First, checkout to the main branch
+  git checkout main
+
+  # Get a list of all branches and delete those that are not "main"
+  git for-each-ref --format="%(refname:short)" refs/heads | \
+  while read branch
+  do
+    if [[ "$branch" != "main" ]]; then
+      git branch -D $branch
+    fi
+  done
+}
